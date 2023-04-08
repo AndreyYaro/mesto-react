@@ -1,0 +1,21 @@
+.button_type_create {
+  border: none;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #fff;
+  background-color: #000;
+  border-radius: 2px;
+  padding: 16px 141px;
+  margin: 20px 0 0 0;
+}
+
+.button_type_create:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 767px) {
+  .button_type_create {
+    font-size: 14px;
+    padding: 14px 82px;
+  }
+}

@@ -1,0 +1,7 @@
+.element__name-like {
+  position: relative;
+  padding: 15px 20px 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
