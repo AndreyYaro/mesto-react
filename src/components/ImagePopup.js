@@ -1,15 +1,19 @@
 function ImagePopup(props) {
-  <div className="popup popup-card">
-    <div className="popup-card__container">
-      <button
-        type="button"
-        className="button button_type_close-card popup__close"
-        aria-label="закрыть"
-      ></button>
-      <img className="popup-card__img" />
-      <p className="popup-card__text"></p>
+  console.log(props);
+  return props.card ? (
+    <div className="popup popup-card popup__opened">
+      <div className="popup-card__container">
+        <button
+          type="button"
+          className="button button_type_close popup__close"
+          aria-label="закрыть"
+          onClick={props.onClose}
+        ></button>
+        <img className="popup-card__img" src={props.card.link} />
+        <p className="popup-card__text">{props.card.name}</p>
+      </div>
     </div>
-  </div>;
+  ) : null;
 }
 
 export default ImagePopup;

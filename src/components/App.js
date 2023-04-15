@@ -1,20 +1,83 @@
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import "../index.css";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import { api } from "../utils/Api";
 
 function App() {
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(undefined);
+  const [profile, setProfile] = useState(undefined);
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api
+      .getProfile()
+      .then((res) => {
+        console.log(`res %o`, res);
+        setProfile(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cards) => {
+        console.log(`cards %o`, cards);
+        setCards(cards);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const onEditAvatar = () => {
+    setEditAvatarPopupOpen(true);
+  };
+
+  const onEditProfile = () => {
+    setEditProfilePopupOpen(true);
+  };
+
+  const onAddPlace = () => {
+    setAddPlacePopupOpen(true);
+    console.log("123");
+  };
+
+  const onSelectedImage = (item) => {
+    console.log(item);
+    setSelectedCard(item);
+  };
+
+  const closeAllPopups = () => {
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setEditAvatarPopupOpen(false);
+    setSelectedCard(false);
+  };
+
   return (
-    <div classNameName="page">
+    <div className="page">
       <Header />
-      <Main />
+      <Main
+        handleEditAvatarClick={onEditAvatar}
+        handleEditProfileClick={onEditProfile}
+        handleAddPlaceClick={onAddPlace}
+        avatar={profile ? profile.avatar : null}
+        handleCardClick={onSelectedImage}
+        cards={cards}
+      />
       <Footer />
       <PopupWithForm
         name="edit"
         title="Редактировать профиль"
         buttonText="Сохранить"
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
       >
         <input
           type="text"
@@ -37,7 +100,13 @@ function App() {
         />
         <span id="user-profession-error" className="error"></span>
       </PopupWithForm>
-      <PopupWithForm name="add" title="Новое место" buttonText="Создать">
+      <PopupWithForm
+        name="add"
+        title="Новое место"
+        buttonText="Создать"
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+      >
         <input
           name="name"
           type="text"
@@ -63,6 +132,8 @@ function App() {
         name="avatar"
         title="Обновить аватар"
         buttonText="Сохранить"
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
       >
         <input
           name="link"
@@ -75,7 +146,7 @@ function App() {
         <span id="place-link-err" className="error"></span>
       </PopupWithForm>
       <PopupWithForm name="delete" title="Вы уверены?" buttonText="Да" />
-      <ImagePopup />
+      <ImagePopup onClose={closeAllPopups} card={selectedCard} />
     </div>
   );
 }
