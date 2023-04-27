@@ -1,5 +1,5 @@
 import { isError } from "lodash";
-
+import React from "react";
 export default function Card(props) {
   function handleClick() {
     console.log(`card ${props.data.card}`);

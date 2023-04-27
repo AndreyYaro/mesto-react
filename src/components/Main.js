@@ -1,5 +1,6 @@
 import "../index.css";
 import Card from "./Card";
+import React from "react";
 
 function Main(props) {
   // const handleEditAvatarClick = () => {
