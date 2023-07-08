@@ -18,6 +18,12 @@ function PopupWithForm(props) {
           name="adding-info"
           className={`popup__form popup__form_type_${props.name}`}
           noValidate
+          onSubmit={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            props.handleSubmit();
+            props.onClose();
+          }}
         >
           {props.children}
           <button

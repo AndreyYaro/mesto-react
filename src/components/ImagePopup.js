@@ -1,7 +1,7 @@
 import React from "react";
 
 function ImagePopup(props) {
-  console.log(props);
+  // console.log(props);
   return props.card ? (
     <div className="popup popup-card popup__opened">
       <div className="popup-card__container">

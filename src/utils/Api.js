@@ -41,9 +41,9 @@ class Api {
         name,
         link,
       }),
-    }).then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-    );
+    }).then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 
   deleteCard(id) {
@@ -83,6 +83,17 @@ class Api {
     }).then((res) =>
       res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
     );
+  }
+
+  getUserInfo() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          name: "Вася",
+          profession: "Урод",
+        });
+      }, 1000);
+    });
   }
 }
 

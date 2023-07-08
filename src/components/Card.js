@@ -1,26 +1,51 @@
 import { isError } from "lodash";
 import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 export default function Card(props) {
-  function handleClick() {
-    console.log(`card ${props.data.card}`);
-    props.onCardClick(props.data.card);
+  function handleClickDelete() {
+    console.log(props.data);
+    props.onCardDelete(props.data);
   }
+
+  function handleLikeClick() {
+    console.log(`card %o`, props);
+    props.onCardLike(props.data);
+  }
+
+  const currentUser = React.useContext(CurrentUserContext);
+  const isOwn =
+    currentUser &&
+    props.data &&
+    props.data.owner &&
+    props.data.owner._id === currentUser._id;
+
+  const isLiked =
+    currentUser && props.data.likes.some((i) => i._id === currentUser._id);
+
+  const cardLikeButtonClassName = `button element__like ${
+    isLiked && "element__like_active"
+  }`;
 
   //console.log(props);
   return (
     <div className="template">
       <article className="element">
-        <button
+        {/* <button
           type="button"
           className="button element__trash"
           aria-label="удалить"
-        ></button>
+        ></button> */}
+        {isOwn && (
+          <button
+            className="button element__trash"
+            onClick={handleClickDelete}
+          />
+        )}
         <img
           className="element__image"
           src={props.data.link}
           alt={props.data.name}
           onClick={() => {
-            console.log(props.data);
             props.onCardClick(props.data);
           }}
         />
@@ -29,8 +54,9 @@ export default function Card(props) {
           <div className="element__like-container">
             <button
               type="button"
-              className="button element__like"
+              className={cardLikeButtonClassName}
               aria-label="нравится"
+              onClick={handleLikeClick}
             ></button>
             <span className="element__like-counter">
               {props.data.likes.length}

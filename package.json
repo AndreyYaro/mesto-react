@@ -36,6 +36,10 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "envify": "^4.1.0",
+    "gh-pages": "^5.0.0",
+    "terser": "^5.18.2",
+    "terser-brunch": "^4.1.0",
+    "uglifyify": "^5.0.2"
   }
 }
