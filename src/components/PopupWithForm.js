@@ -1,42 +1,50 @@
 import React from "react";
 
-function PopupWithForm(props) {
-  return props.isOpen ? (
-    <div
-      className={`popup popup_type_${props.name}`}
-      //style={{ display: props.isOpen ? "block" : "none" }}
-    >
-      <div className={`popup__container popup__container_type_${props.name}`}>
+function PopupWithForm({
+  isOpen,
+  name,
+  title,
+  onClose,
+  buttonText,
+  children,
+  handleSubmit,
+}) {
+  // разметка после условия открытия по-моему в (), или я ошибаюсь?
+
+  return (
+    <div className={`popup popup-card ${isOpen ? "" : "popup__closed"}`}>
+      {/* <div className={`popup popup_type_${props.name}`}> */}
+      <div className={`popup__container popup__container_type_${name}`}>
         <button
           type="button"
           className="button button_type_close popup__close"
           aria-label="закрыть"
-          onClick={props.onClose}
+          onClick={onClose}
         ></button>
-        <h2 className="popup__title">{props.title}</h2>
+        <h2 className="popup__title">{title}</h2>
         <form
           name="adding-info"
-          className={`popup__form popup__form_type_${props.name}`}
+          className={`popup__form popup__form_type_${name}`}
           noValidate
           onSubmit={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            props.handleSubmit();
-            props.onClose();
+            handleSubmit();
+            // props.onClose();
           }}
         >
-          {props.children}
+          {children}
           <button
             type="submit"
             className="button button_type_save popup__button"
             aria-label=""
           >
-            {props.buttonText}
+            {buttonText}
           </button>
         </form>
       </div>
     </div>
-  ) : null;
+  );
 }
 
 export default PopupWithForm;

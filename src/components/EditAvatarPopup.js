@@ -1,22 +1,27 @@
 import PopupWithForm from "./PopupWithForm";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function EditAvatarPopup(props) {
+function EditAvatarPopup({ isOpen, onClose, updateAvatar }) {
+  const currentUser = React.useContext(CurrentUserContext);
   const ref = React.useRef();
-  useLayoutEffect(() => {
-    if (ref.current) ref.current.value = props.src;
-  }, []);
+  useEffect(() => {
+    if (currentUser) ref.current.value = currentUser.avatar;
+  }, [currentUser]);
+
+  const handleEditAvatarSubmit = () => {
+    const src = ref.current.value;
+    updateAvatar(src);
+  };
+
   return (
     <PopupWithForm
       name="avatar"
       title="Обновить аватар"
       buttonText="Сохранить"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      handleSubmit={() => {
-        const src = ref.current.value;
-        props.updateAvatar(src);
-      }}
+      isOpen={isOpen}
+      onClose={onClose}
+      handleSubmit={handleEditAvatarSubmit}
     >
       <input
         name="link"

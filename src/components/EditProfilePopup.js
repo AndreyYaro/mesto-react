@@ -1,10 +1,10 @@
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
-function EditProfilePopup(props) {
-  const [name, setName] = useState(null);
-  const [description, setDescription] = useState(null);
+function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   // Подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
@@ -18,7 +18,7 @@ function EditProfilePopup(props) {
   }, [currentUser]);
 
   const handleSubmit = (e) => {
-    props.onUpdateUser({
+    onUpdateUser({
       name,
       about: description,
     });
@@ -29,13 +29,13 @@ function EditProfilePopup(props) {
       name="edit"
       title="Редактировать профиль"
       buttonText="Сохранить"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={() => {
+        setName(currentUser.name);
+        setDescription(currentUser.about);
+        onClose();
+      }}
       handleSubmit={handleSubmit}
-      //   handleSubmit={() => {
-      //     currentUser.name = name;
-      //     currentUser.about = description;
-      //   }}
     >
       <input
         type="text"

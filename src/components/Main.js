@@ -3,20 +3,25 @@ import Card from "./Card";
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main(props) {
+function Main({
+  handleEditAvatarClick,
+  handleEditProfileClick,
+  handleAddPlaceClick,
+  handleCardClick,
+  cards,
+  onCardLike,
+  onCardDelete,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="main">
       <section className="profile">
         <div className="profile__card">
-          <div
-            className="profile__avatar"
-            onClick={props.handleEditAvatarClick}
-          >
+          <div className="profile__avatar" onClick={handleEditAvatarClick}>
             {currentUser && (
               <img
-                src={props.avatar}
+                src={currentUser.avatar}
                 alt={currentUser.name}
                 className="profile__avatar-img"
               />
@@ -30,7 +35,7 @@ function Main(props) {
               type="button"
               className="button button_type_edit"
               aria-label="редактировать"
-              onClick={props.handleEditProfileClick}
+              onClick={handleEditProfileClick}
             ></button>
             <p className="profile__profession">
               {currentUser ? currentUser.about : "unknown users"}
@@ -38,21 +43,21 @@ function Main(props) {
           </div>
         </div>
         <button
-          onClick={props.handleAddPlaceClick}
+          onClick={handleAddPlaceClick}
           type="button"
           className="button button_type_plus"
           aria-label="добавить"
         ></button>
       </section>
       <section className="elements">
-        {props.cards
-          ? props.cards.map((card) => (
+        {cards
+          ? cards.map((card) => (
               <Card
                 key={card._id}
                 data={card}
-                onCardClick={props.handleCardClick}
-                onCardLike={props.onCardLike}
-                onCardDelete={props.onCardDelete}
+                onCardClick={handleCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
               />
             ))
           : null}

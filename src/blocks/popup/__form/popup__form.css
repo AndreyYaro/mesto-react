@@ -1,8 +1,13 @@
-.popup__form{
-    max-width: 358px;
+.popup__form {
+  max-width: 358px;
 }
+
+.popup__closed {
+  display: none !important;
+}
+
 @media screen and (max-width: 766px) {
-    .popup__form{
-        max-width: 238px;
-    }
+  .popup__form {
+    max-width: 238px;
+  }
 }

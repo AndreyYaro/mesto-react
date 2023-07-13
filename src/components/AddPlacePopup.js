@@ -1,22 +1,28 @@
 import react, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup(props) {
+function AddPlacePopup({ addPlaceSubmit, isOpen, onClose }) {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
+
+  const handleAdditingPopup = () => {
+    addPlaceSubmit(name, link);
+    setName("");
+    setLink("");
+  };
 
   return (
     <PopupWithForm
       name="add"
       title="Новое место"
       buttonText="Создать"
-      isOpen={props.isOpen}
+      isOpen={isOpen}
       onClose={() => {
         setName("");
         setLink("");
-        props.onClose();
+        onClose();
       }}
-      handleSubmit={() => props.addPlaceSubmit(name, link)}
+      handleSubmit={handleAdditingPopup}
     >
       <input
         name="name"

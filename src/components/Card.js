@@ -3,12 +3,10 @@ import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 export default function Card(props) {
   function handleClickDelete() {
-    console.log(props.data);
     props.onCardDelete(props.data);
   }
 
   function handleLikeClick() {
-    console.log(`card %o`, props);
     props.onCardLike(props.data);
   }
 
@@ -25,16 +23,9 @@ export default function Card(props) {
   const cardLikeButtonClassName = `button element__like ${
     isLiked && "element__like_active"
   }`;
-
-  //console.log(props);
   return (
     <div className="template">
       <article className="element">
-        {/* <button
-          type="button"
-          className="button element__trash"
-          aria-label="удалить"
-        ></button> */}
         {isOwn && (
           <button
             className="button element__trash"
