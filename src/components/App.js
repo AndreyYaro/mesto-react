@@ -46,10 +46,6 @@ function App() {
     setSelectedCard(item);
   };
 
-  // const onImagePopup = () => {
-  //   setSelectedCardPopupOpen(true);
-  // };
-
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -64,13 +60,13 @@ function App() {
     const promise = isLiked ? api.deleteLike(card._id) : api.addLike(card._id);
     promise
       .then((newCard) => {
-        const newCards = cards.map((c) =>
-          c._id === newCard._id ? newCard : c
+        // const newCards = cards.map((c) =>
+        //   c._id === newCard._id ? newCard : c
+        // );
+        // setCards(newCards);
+        setCards((cards) =>
+          cards.map((c) => (c._id === newCard._id ? newCard : c))
         );
-        setCards(newCards);
-        //   setCards((cards) =>
-        //     cards.map((c) => (c._id === newCard._id ? newCard : c))
-        //   );
       })
       .catch((res) => {
         alert(res);
@@ -96,7 +92,7 @@ function App() {
 
   function handleUpdateAvatar(src) {
     //debugger;
-    setCurrentUser({ ...currentUser, avatar: src });
+    // setCurrentUser({ ...currentUser, avatar: src });
     api
       .editAvatar(src)
       .then((resUser) => {
@@ -152,7 +148,6 @@ function App() {
           <Footer />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
-            // onClose={() => setEditProfilePopupOpen(false)}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
           />
@@ -163,7 +158,6 @@ function App() {
           />
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
-            // onClose={() => setEditAvatarPopupOpen(false)}
             onClose={closeAllPopups}
             updateAvatar={handleUpdateAvatar}
           />
